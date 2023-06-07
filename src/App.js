@@ -1,30 +1,29 @@
-import ListGroup from "./ListGroup";
-import Alert from "./Alert";
+import { useState } from "react";
+import Alert from "./Alert.js";
+import MyButton from "./MyButton.js";
 
 function App() {
-  let items = ["New York", "San Francisco", "Tokyo", "London", "Paris"];
-  let items2 = ["Heartland", "Accumula", "Pallet", "Goldenrod", "Hearthome"];
+  const [showAlert, setShowAlert] = useState(false);
 
-  const handleSelectedItem = (item) => {
-    console.log(item);
+  const onClick = (event) => {
+    const { target } = event;
+    const { className } = target;
+    console.log(className);
+    if (className === "btn btn-primary") setShowAlert(true);
+    else if (className === "btn-close") setShowAlert(false);
   };
 
   return (
-    <div>
-      <Alert>
-        Hello <span>World</span>
-      </Alert>
-      <ListGroup
-        items={items}
-        heading={"Cities"}
-        onSelectItem={handleSelectedItem}
-      />
-      <ListGroup
-        items={items2}
-        heading={"Pokemon Cities"}
-        onSelectItem={handleSelectedItem}
-      />
-    </div>
+    <>
+      {showAlert === true ? (
+        <Alert show={showAlert} closeClick={onClick}>
+          My alert
+        </Alert>
+      ) : null}
+      <MyButton type="primary" onClick={onClick}>
+        Hey
+      </MyButton>
+    </>
   );
 }
 
